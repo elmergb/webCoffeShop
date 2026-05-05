@@ -1,14 +1,14 @@
 using final_crud.Data;
+using final_crud.Middleware;
 using final_crud.Repositories;
 using final_crud.Repositories.Interfaces;
 using final_crud.Services;
 using final_crud.Services.GenerateToken;
 using final_crud.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -52,10 +52,17 @@ builder.Services.AddAuthentication(
             };
     });
 
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true; // shows versions in response header
+});
 // AUTHORIZATION
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
+app.UseMiddleware<ExceptionMiddleware>();
 
 //app.UseHttpsRedirection();
 

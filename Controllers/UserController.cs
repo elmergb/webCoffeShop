@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace final_crud.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("api/users")]
     public class UserController : ControllerBase
@@ -21,34 +20,20 @@ namespace final_crud.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterUserDto dto)
         {
-            try
-            {
                 var result =
                     await _service.RegisterAsync(dto);
-
                 return Ok(result);
-
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] UpdateUserDto dto)
         {
-            try
-            {
                 var result = await _service.UpdateAsync(id, dto);
                 if (!result)
                     return NotFound("User not found");
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+
+                return Ok("User successfully updated");
+
         }
 
         [HttpDelete("{id}")]
@@ -83,16 +68,8 @@ namespace final_crud.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDTO dto)
         {
-            try
-            {
                 var token = await _service.Login(dto);
-
                 return Ok(token);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
         }
 
         [Authorize(Roles = "Admin")]

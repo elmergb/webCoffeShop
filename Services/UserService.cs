@@ -18,14 +18,13 @@ namespace final_crud.Services
             _jwtTokenService = jwtTokenService;
         }
 
-        public async Task<UserResponseDto> RegisterAsync(RegisterUserDto dto)
+        public async Task<UserResponseDtoV1> RegisterAsync(RegisterUserDto dto)
         {
             var checkEmail = await _repository.GetUserAsync(dto.Email);
 
             if (checkEmail != null)
-            {
                 throw new Exception("Email already exists");
-            }
+            
 
             var hashPassword = BCrypt.Net.BCrypt.HashPassword(dto.PasswordHash);
 
@@ -40,7 +39,7 @@ namespace final_crud.Services
             var createdUser =
                 await _repository.CreateUserAsync(user);
 
-            return new UserResponseDto
+            return new UserResponseDtoV1
             {
                 Id = createdUser.Id,
                 Email = createdUser.Email
@@ -52,7 +51,7 @@ namespace final_crud.Services
             var user = await _repository.GetByIdAsync(id);
 
             if (user == null)
-                return false;
+                throw new Exception("User not found");
 
             user.Email = dto.Email;
             user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.PasswordHash);
@@ -67,11 +66,11 @@ namespace final_crud.Services
             return await _repository.DeleteUserRepo(id);
         }
 
-        public async Task<List<UserResponseDto>> GetAllUserService()
+        public async Task<List<UserResponseDtoV1>> GetAllUserService()
         {
             var users = await _repository.GetAllUsersRepo();
 
-            var list = users.Select(u => new UserResponseDto
+            var list = users.Select(u => new UserResponseDtoV1
             {
                 Id = u.Id,
                 Email = u.Email,
@@ -81,14 +80,14 @@ namespace final_crud.Services
             return list;
         }
 
-        public async Task<UserResponseDto> GetUserByEmail(string email)
+        public async Task<UserResponseDtoV1> GetUserByEmail(string email)
         {
             var users = await _repository.GetUserAsync(email);
 
             if (users == null)
-                return null;
+                throw new Exception("User not found");
 
-            return new UserResponseDto
+            return new UserResponseDtoV1
             {
                 Id = users.Id,
                 Email = users.Email,
@@ -96,17 +95,17 @@ namespace final_crud.Services
             };
         }
 
-        public async Task<UserResponseDto?> Login(LoginDTO dto)
+        public async Task<LoginResult?> Login(LoginDTO dto)
         {
             var user = await _repository.GetUserAsync(dto.Email);
 
             if (user == null)
-                return null;
+                throw new Exception("User not found");
 
             var isPasswordValid = BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash);
 
             if (!isPasswordValid)
-                return null;
+                throw new Exception("Invalid password"); ;
 
             //Console.WriteLine(user.Email);
             //Console.WriteLine(user.Role);
@@ -114,12 +113,12 @@ namespace final_crud.Services
 
             var token = _jwtTokenService.GenerateJwtToken(user);
 
-            return new UserResponseDto
+            return new LoginResult
             {
                 Id = user.Id,
                 Email = user.Email,
                 Role = user.Role,
-                Token = token
+                Token = token,
             };
 
 
