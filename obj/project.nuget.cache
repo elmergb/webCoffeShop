@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "RDWdAMwJgnw=",
+  "dgSpecHash": "D+CWAQ87sUM=",
   "success": true,
   "projectFilePath": "C:\\Users\\edwar\\source\\repos\\final-crud\\final-crud\\final-crud.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\edwar\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
+    "C:\\Users\\edwar\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\edwar\\.nuget\\packages\\azure.core\\1.47.1\\azure.core.1.47.1.nupkg.sha512",
     "C:\\Users\\edwar\\.nuget\\packages\\azure.identity\\1.14.2\\azure.identity.1.14.2.nupkg.sha512",
     "C:\\Users\\edwar\\.nuget\\packages\\bcrypt.net-next\\4.1.0\\bcrypt.net-next.4.1.0.nupkg.sha512",
@@ -57,5 +59,18 @@
     "C:\\Users\\edwar\\.nuget\\packages\\system.security.cryptography.pkcs\\9.0.4\\system.security.cryptography.pkcs.9.0.4.nupkg.sha512",
     "C:\\Users\\edwar\\.nuget\\packages\\system.security.cryptography.protecteddata\\9.0.4\\system.security.cryptography.protecteddata.9.0.4.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "message": "Package 'AutoMapper' 12.0.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x",
+      "projectPath": "C:\\Users\\edwar\\source\\repos\\final-crud\\final-crud\\final-crud.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\edwar\\source\\repos\\final-crud\\final-crud\\final-crud.csproj",
+      "libraryId": "AutoMapper",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
 }

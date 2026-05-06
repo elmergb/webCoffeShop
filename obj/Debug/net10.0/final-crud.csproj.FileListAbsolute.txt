@@ -7,6 +7,8 @@ C:\Users\edwar\source\repos\final-crud\final-crud\bin\Debug\net10.0\final-crud.d
 C:\Users\edwar\source\repos\final-crud\final-crud\bin\Debug\net10.0\final-crud.runtimeconfig.json
 C:\Users\edwar\source\repos\final-crud\final-crud\bin\Debug\net10.0\final-crud.dll
 C:\Users\edwar\source\repos\final-crud\final-crud\bin\Debug\net10.0\final-crud.pdb
+C:\Users\edwar\source\repos\final-crud\final-crud\bin\Debug\net10.0\AutoMapper.dll
+C:\Users\edwar\source\repos\final-crud\final-crud\bin\Debug\net10.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\edwar\source\repos\final-crud\final-crud\bin\Debug\net10.0\Azure.Core.dll
 C:\Users\edwar\source\repos\final-crud\final-crud\bin\Debug\net10.0\Azure.Identity.dll
 C:\Users\edwar\source\repos\final-crud\final-crud\bin\Debug\net10.0\BCrypt.Net-Next.dll

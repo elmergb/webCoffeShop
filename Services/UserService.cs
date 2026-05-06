@@ -4,6 +4,7 @@ using final_crud.Repositories.Interfaces;
 using final_crud.Services.Interfaces;
 using BCrypt.Net;
 using final_crud.Services.GenerateToken;
+using AutoMapper;
 
 namespace final_crud.Services
 {
@@ -11,11 +12,12 @@ namespace final_crud.Services
     {
         private readonly IUserRepository _repository;
         private readonly JwtTokenService _jwtTokenService;
-
-        public UserService (IUserRepository repository, JwtTokenService jwtTokenService)
+        private readonly IMapper _mapper;
+        public UserService (IUserRepository repository, JwtTokenService jwtTokenService, IMapper mapper)
         {
             _repository = repository;
             _jwtTokenService = jwtTokenService;
+            _mapper = mapper;
         }
 
         public async Task<UserResponseDtoV1> RegisterAsync(RegisterUserDto dto)
@@ -113,14 +115,15 @@ namespace final_crud.Services
 
             var token = _jwtTokenService.GenerateJwtToken(user);
 
-            return new LoginResult
-            {
-                Id = user.Id,
-                Email = user.Email,
-                Role = user.Role,
-                Token = token,
-            };
+            return _mapper.Map<LoginResult>(user);
 
+            //return new LoginResult
+            //{
+            //    Id = user.Id,
+            //    Email = user.Email,
+            //    Role = user.Role,
+            //    Token = token,
+            //};
 
         }
     }
