@@ -1,6 +1,6 @@
 ﻿namespace final_crud.Models.Products
 {
-    public class Product
+    public class Product : BaseEntity
     {
     public int ProductId { get; set; }
     public int CategoryId { get; set; }
@@ -19,10 +19,10 @@
     }
     public enum ProductType
     {
-        Ring,
-        Necklace,
-        Bracelet,
-        Earring,
-        Other
+        Ring = 0,
+        Necklace = 1,
+        Bracelet = 2,
+        Earring = 3,
+        Other = 4,
     }
 }

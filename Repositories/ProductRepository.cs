@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace final_crud.Repositories
 {
-    public class ProductService : IProductRepository
+    public class ProductRepository : IProductRepository
     {
         private readonly AppDbContext _context;
 
-        public ProductService(AppDbContext context)
+        public ProductRepository(AppDbContext context)
         {
             _context = context;
         }
@@ -52,6 +52,11 @@ namespace final_crud.Repositories
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<Product> getProduct(string name)
+        {
+            return await _context.Products.FirstOrDefaultAsync(p => p.Name == name);
         }
     }
 }

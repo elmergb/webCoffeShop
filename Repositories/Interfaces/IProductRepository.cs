@@ -9,5 +9,6 @@ namespace final_crud.Repositories.Interfaces
         Task<List<Product>> GetAllProduct();
         Task<Product> UpdateProduct(Product product);
         Task<bool> DeleteProduct(int id);
+        Task<Product> getProduct(string name);
     }
 }
