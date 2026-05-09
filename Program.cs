@@ -13,10 +13,22 @@ using System.Text;
 using final_crud.Repositories;
 using final_crud.Repositories.Interfaces;
 
+using System.Text.Json.Serialization;
+
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+});
+
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+    });
+
+builder.Services.AddAutoMapper(typeof(Program));    
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(

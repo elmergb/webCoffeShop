@@ -1,4 +1,5 @@
-﻿namespace final_crud.DTOs.Products
+﻿
+namespace final_crud.DTOs.Products
 {
     public class CategoryDto
     {

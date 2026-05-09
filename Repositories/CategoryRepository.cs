@@ -24,13 +24,17 @@ namespace final_crud.Repositories
         public async Task<Category> GetCategoryById(int id)
         {
             return await _context.Categories
+                .Include(c => c.ParentCategory)  
                 .Include(c => c.SubCategories)
                 .FirstOrDefaultAsync(c => c.CategoryId == id);
         }
 
         public async Task<List<Category>> GetAllCategory()
         {
-            return await _context.Categories.ToListAsync();
+            return await _context.Categories
+                .Include(c => c.ParentCategory)     
+                .Include(c => c.SubCategories)
+                .ToListAsync();
         }
 
         public async Task<Category> UpdateCategory(Category category)

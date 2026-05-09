@@ -15,11 +15,42 @@ namespace final_crud.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> AddCategory([FromBody]CategoryDto dto)
+        public async Task<IActionResult> AddCategory([FromBody] CategoryDto dto)
         {
             var result = await _service.CreateCategoryAsync(dto);
 
             return Ok(result);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCategory(int id)
+        {
+            var result = await _service.GetCategoryByIdAsync(id);
+
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteId(int id)
+        {
+            var result = await _service.DeleteCategoryAsync(id);
+
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await _service.GetAllCategoriesAsync();
+            
+            return Ok(result);
+        }
+
     }
 }
