@@ -52,5 +52,15 @@ namespace final_crud.Controllers
             return Ok(result);
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCategory(int id, [FromBody] CategoryUpdateDto dto)
+        {
+            var result = await _service.UpdateCategoryAsync(id, dto);
+
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
+        } 
     }
 }

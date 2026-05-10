@@ -81,7 +81,7 @@ namespace final_crud.Services
             };
         }
 
-        public async Task<bool> UpdateCategoryAsync(int id, CategoryUpdateDto dto)
+        public async Task<CategoryReadDto> UpdateCategoryAsync(int id, CategoryUpdateDto dto)
         {
             var isExist = await _repository.GetCategoryById(id);
 
@@ -94,7 +94,12 @@ namespace final_crud.Services
 
             await _repository.UpdateCategory(isExist);
 
-            return true;
+            return new CategoryReadDto
+            {
+                Name = isExist.Name,
+                Description = dto.Description,
+                ParentCategoryId = dto.ParentCategoryId,
+            };
         }
 
         public async Task<bool> DeleteCategoryAsync(int id)

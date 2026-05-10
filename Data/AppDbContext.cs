@@ -32,6 +32,49 @@ namespace final_crud.Data
                 .WithMany(c => c.SubCategories)
                 .HasForeignKey(c => c.ParentCategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                if (typeof(BaseEntity).IsAssignableFrom(entityType.ClrType))
+                {
+                    var entity = modelBuilder.Entity(entityType.ClrType);
+
+                    entity.Property(nameof(BaseEntity.IsActive)).HasDefaultValue(true);
+                    entity.Property(nameof(BaseEntity.CreatedAt)).HasDefaultValueSql("GETUTCDATE()");
+
+                    entity.Property(nameof(BaseEntity.CreatedBy)).HasMaxLength(255);
+                    entity.Property(nameof(BaseEntity.UpdatedBy)).HasMaxLength(255);
+                }
+            }
         }
+
+        public override int SaveChanges()
+        {
+            ApplyAuditFields();
+            return base.SaveChanges();
+        }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            ApplyAuditFields();
+            return await base.SaveChangesAsync(cancellationToken);
+        }
+
+        private void ApplyAuditFields()
+        {
+            foreach (var entry in ChangeTracker.Entries<BaseEntity>())
+            {
+                if (entry.State == EntityState.Added)
+                {
+                    entry.Entity.CreatedAt = DateTime.UtcNow;
+                    entry.Entity.IsActive = true;
+                }
+                else if (entry.State == EntityState.Modified)
+                {
+                    entry.Entity.UpdatedAt = DateTime.UtcNow;
+                }
+            }
+        }
+
     }
 }
