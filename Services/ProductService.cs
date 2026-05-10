@@ -8,12 +8,10 @@ namespace final_crud.Services
     public class ProductService : IProductService
     {
         private readonly IProductRepository _repository;
-
         public ProductService(IProductRepository repository)
         {
             _repository = repository;
         }
-
         public async Task<ProductDto> Create(ProductDto dto)
         {
             var result = await _repository.getProduct(dto.Name);
@@ -47,5 +45,29 @@ namespace final_crud.Services
                 WeightGrams = resultProduct.WeightGrams
             };
         }
+
+        public async Task<ProductUpdateDto> Update(int id, ProductUpdateDto dto )
+        {
+            var product = await _repository.GetProductById(id);
+
+            if (product == null)
+                throw new Exception("product does not exist");
+
+            product.CategoryId = dto.CategoryId;
+            product.Name = dto.Name;
+            product.Price = dto.Price;
+            product.ProductType = dto.ProductType;
+            product.Description = dto.Description;
+            product.Material = dto.Material;
+            product.ImageUrl = dto.ImageUrl;
+            product.WeightGrams = dto.WeightGrams;
+
+            var resultProduct = await _repository.UpdateProduct(product);
+
+            return new ProductUpdateDto
+            {
+                CategoryId = resultProduct.CategoryId,
+            };
+        } 
     }   
 }

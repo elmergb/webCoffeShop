@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>final-crud</name>
+    </assembly>
+    <members>
+        <member name="M:final_crud.Controllers.UserController.Register(final_crud.DTOs.User.RegisterUserDto)">
+            <summary>
+            Registers a new user with the provided details. The user can be assigned a role (e.g., Admin, User) during registration. The password is securely hashed before being stored in the database. This endpoint allows for the creation of new user accounts and returns the result of the registration process.
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="T:final_crud.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:final_crud.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:final_crud.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:final_crud.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:final_crud.Migrations.FixUserTable">
+            <inheritdoc />
+        </member>
+        <member name="M:final_crud.Migrations.FixUserTable.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:final_crud.Migrations.FixUserTable.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:final_crud.Migrations.FixUserTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:final_crud.Migrations.UpdateUserFields">
+            <inheritdoc />
+        </member>
+        <member name="M:final_crud.Migrations.UpdateUserFields.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:final_crud.Migrations.UpdateUserFields.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:final_crud.Migrations.UpdateUserFields.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:final_crud.Migrations.AddProductTable">
+            <inheritdoc />
+        </member>
+        <member name="M:final_crud.Migrations.AddProductTable.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:final_crud.Migrations.AddProductTable.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:final_crud.Migrations.AddProductTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:final_crud.Migrations.AddBaseEntityFields">
+            <inheritdoc />
+        </member>
+        <member name="M:final_crud.Migrations.AddBaseEntityFields.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:final_crud.Migrations.AddBaseEntityFields.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:final_crud.Migrations.AddBaseEntityFields.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:final_crud.Migrations.FixIsActiveNull">
+            <inheritdoc />
+        </member>
+        <member name="M:final_crud.Migrations.FixIsActiveNull.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:final_crud.Migrations.FixIsActiveNull.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:final_crud.Migrations.FixIsActiveNull.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

@@ -18,7 +18,6 @@ namespace final_crud.Controllers
         public async Task<IActionResult> AddCategory([FromBody] CategoryDto dto)
         {
             var result = await _service.CreateCategoryAsync(dto);
-
             return Ok(result);
         }
 

@@ -17,8 +17,13 @@ namespace final_crud.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Registers a new user with the provided details. The user can be assigned a role (e.g., Admin, User) during registration. The password is securely hashed before being stored in the database. This endpoint allows for the creation of new user accounts and returns the result of the registration process.
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
         [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterUserDto dto)
+        public async Task<IActionResult> Register([FromBody]RegisterUserDto dto)
         {
                 var result =
                     await _service.RegisterAsync(dto);
