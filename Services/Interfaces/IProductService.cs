@@ -6,8 +6,8 @@ namespace final_crud.Services.Interfaces
     {
         Task<ProductDto> Create(ProductDto dto);
         Task<ProductUpdateDto> Update(int id, ProductUpdateDto dto);
-        //Task<bool> Delete(int id);
-        //Task<ProductReadDto> GetById(int id);
-        //Task<IEnumerable<ProductReadDto>> GetAll();
+        Task<ProductReadDto> Delete(int id);
+        Task<ProductReadDto> GetById(int id);
+        Task<List<ProductReadDto>> GetAll();
     }
-}
+}   

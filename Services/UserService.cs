@@ -72,11 +72,13 @@ namespace final_crud.Services
         {
             var users = await _repository.GetAllUsersRepo();
 
-            var list = users.Select(u => new UserResponseDtoV1
+            var list = users.Where(u => u.IsActive)
+                .Select(u => new UserResponseDtoV1
             {
                 Id = u.Id,
                 Email = u.Email,
                 Role = u.Role,
+                IsActive = u.IsActive
             }).ToList();
 
             return list;

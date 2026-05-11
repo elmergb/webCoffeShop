@@ -29,9 +29,9 @@ namespace final_crud.Repositories
             return await _context.Products.FindAsync(id);
         }
 
-        public async Task<List<Product>> GetAllProduct()
+        public IQueryable<Product> GetAllProduct()
         {
-            return await _context.Products.ToListAsync();
+            return _context.Products;
         }
 
         public async Task<Product> UpdateProduct(Product product)

@@ -2,6 +2,7 @@
 using final_crud.DTOs.Products;
 using final_crud.Repositories.Interfaces;
 using final_crud.Models.Products;
+using Microsoft.EntityFrameworkCore;
 
 namespace final_crud.Services
 {
@@ -67,7 +68,74 @@ namespace final_crud.Services
             return new ProductUpdateDto
             {
                 CategoryId = resultProduct.CategoryId,
+                Name = resultProduct.Name,
+                Price = resultProduct.Price,
+                ProductType = resultProduct.ProductType,
+                Description = resultProduct.Description,
+                Material = resultProduct.Material,
+                ImageUrl = resultProduct.ImageUrl,
+                WeightGrams = resultProduct.WeightGrams
             };
         } 
+
+        public async Task<ProductReadDto> Delete(int id)
+        {
+            var product = await _repository.GetProductById(id);
+            if (product == null)
+                throw new Exception("product does not exist");
+           
+            await _repository.DeleteProduct(id);
+
+            return new ProductReadDto
+            {
+                ProductId = product.ProductId,
+                Name = product.Name,
+                Price = product.Price,
+                ProductType = product.ProductType,
+                Description = product.Description,
+                Material = product.Material,
+                ImageUrl = product.ImageUrl,
+                WeightGrams = product.WeightGrams
+             };
+        }
+
+        public async Task<ProductReadDto> GetById(int id)
+        {
+            var product = await _repository.GetProductById(id);
+
+            if (product == null)
+                throw new Exception("Product does not exist");
+
+            return new ProductReadDto
+            {
+                ProductId = product.ProductId,
+                Name = product.Name,
+                Price = product.Price,
+                ProductType = product.ProductType,
+                Description = product.Description,
+                Material = product.Material,
+                ImageUrl = product.ImageUrl,
+                WeightGrams = product.WeightGrams
+            };
+        }
+
+        public async Task<List<ProductReadDto>> GetAll()
+        {
+            var products = await _repository.GetAllProduct()
+                .Include(p => p.Category)
+                .Where(p => p.IsActive)
+                .Select(p => new ProductReadDto
+                {
+                    ProductId = p.ProductId,
+                    Name = p.Name,
+                    Price = p.Price,
+                    CategoryName = p.Category.Name,
+                    ProductType = p.ProductType,
+                    IsActive = p.IsActive,
+                })
+                .ToListAsync();
+
+            return products;
+        }
     }   
 }

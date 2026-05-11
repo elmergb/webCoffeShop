@@ -30,7 +30,6 @@ namespace final_crud.DTOs.Products
     {
         public int ProductId { get; set; }
 
-        public int CategoryId { get; set; }
         public string CategoryName { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public decimal Price { get; set; }
@@ -39,5 +38,6 @@ namespace final_crud.DTOs.Products
         public string? Material { get; set; }
         public string? ImageUrl { get; set; }
         public decimal? WeightGrams { get; set; }
+        public bool IsActive { get; set; }
     }
 }
