@@ -8,9 +8,14 @@ namespace final_crud.Mapping
     {
         public UserMappingProfile()
         {
-            CreateMap<User, UserResponseDtoV2>();
+            CreateMap<User, UserResponseDtoV2>()
+                .ForMember(dest => dest.Token, opt => opt.Ignore());
+
             CreateMap<RegisterUserDto, User>();
-            CreateMap<User, LoginResult>();
+
+            CreateMap<User, LoginResult>()
+                .ForMember(dest => dest.Token, opt => opt.Ignore())
+                .ForMember(dest => dest.LoginTime, opt => opt.MapFrom(_ => DateTime.Now));
         } 
 
     }

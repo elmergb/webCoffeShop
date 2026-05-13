@@ -73,8 +73,19 @@ namespace final_crud.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDTO dto)
         {
+            try
+            {
                 var token = await _service.Login(dto);
+
                 return Ok(token);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    message = ex.Message
+                });
+            }
         }
 
         [Authorize(Roles = "Admin")]

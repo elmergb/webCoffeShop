@@ -27,7 +27,7 @@ namespace final_crud.Controllers
                 Id = result.Id,
                 Email = result.Email,
                 Role = result.Role,
-                token = result.Token,
+                Token = result.Token,
                 LoginTime = DateTime.UtcNow
             };
 

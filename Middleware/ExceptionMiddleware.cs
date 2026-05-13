@@ -1,47 +1,38 @@
-﻿using System.Net;
-using System.Text.Json;
+﻿using final_crud.Middleware;
 
-namespace final_crud.Middleware
+public class ExceptionMiddleware
 {
-    public class ExceptionMiddleware
+    private readonly RequestDelegate _next;
+
+    public ExceptionMiddleware(RequestDelegate next)
     {
-        private readonly RequestDelegate _next;
-        private readonly ILogger<ExceptionMiddleware> _logger;
+        _next = next;
+    }
 
-        public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
+    public async Task Invoke(HttpContext context)
+    {
+        try
         {
-            _next = next;
-            _logger = logger;
+            await _next(context);
         }
-
-        public async Task InvokeAsync(HttpContext context)
+        catch (AppException ex)
         {
-            try
-            {
-                await _next(context); 
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Unhandled exception occurred");
-
-                await HandleExceptionAsync(context, ex);
-            }
-        }
-
-        private static Task HandleExceptionAsync(HttpContext context, Exception ex)
-        {
+            context.Response.StatusCode = (int)ex.StatusCode;
             context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-            var response = new
+            await context.Response.WriteAsJsonAsync(new
             {
-                StatusCode = 500,
-                Message = ex.Message // ⚠️ in production, hide this
-            };
+                message = ex.Message
+            });
+        }
+        catch (Exception ex)
+        {
+            context.Response.StatusCode = 500;
 
-            var json = JsonSerializer.Serialize(response);
-
-            return context.Response.WriteAsync(json);
+            await context.Response.WriteAsJsonAsync(new
+            {
+                message = "Internal Server Error"
+            });
         }
     }
 }

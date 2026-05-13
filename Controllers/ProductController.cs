@@ -15,7 +15,7 @@ namespace final_crud.Controllers
             _service = service;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> AddProduct([FromBody] ProductDto dto)
         {
@@ -29,7 +29,7 @@ namespace final_crud.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] ProductUpdateDto dto)
         {
@@ -43,7 +43,7 @@ namespace final_crud.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

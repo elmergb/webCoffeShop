@@ -1,10 +1,12 @@
-﻿using final_crud.DTOs.User;
+﻿using AutoMapper;
+using BCrypt.Net;
+using final_crud.DTOs.User;
+using final_crud.Middleware;
 using final_crud.Models;
 using final_crud.Repositories.Interfaces;
-using final_crud.Services.Interfaces;
-using BCrypt.Net;
 using final_crud.Services.GenerateToken;
-using AutoMapper;
+using final_crud.Services.Interfaces;
+using System.Net;
 
 namespace final_crud.Services
 {
@@ -26,7 +28,6 @@ namespace final_crud.Services
 
             if (checkEmail != null)
                 throw new Exception("Email already exists");
-            
 
             var hashPassword = BCrypt.Net.BCrypt.HashPassword(dto.PasswordHash);
 
@@ -34,18 +35,16 @@ namespace final_crud.Services
             {
                 Email = dto.Email,
                 PasswordHash = hashPassword,
-                Role = dto.role
-
+                Role = dto.Role
             };
 
-            var createdUser =
-                await _repository.CreateUserAsync(user);
+            var createdUser = await _repository.CreateUserAsync(user);
 
             return new UserResponseDtoV1
             {
                 Id = createdUser.Id,
                 Email = createdUser.Email
-            };  
+            };
         }
 
         public async Task<bool> UpdateAsync(int id, UpdateUserDto dto)
@@ -104,12 +103,15 @@ namespace final_crud.Services
             var user = await _repository.GetUserAsync(dto.Email);
 
             if (user == null)
-                throw new Exception("User not found");
+                throw new AppException("User not found", HttpStatusCode.NotFound);
+
+
 
             var isPasswordValid = BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash);
 
+
             if (!isPasswordValid)
-                throw new Exception("Invalid password"); ;
+                throw new AppException("Invalid password", HttpStatusCode.Unauthorized);
 
             //Console.WriteLine(user.Email);
             //Console.WriteLine(user.Role);
@@ -117,15 +119,9 @@ namespace final_crud.Services
 
             var token = _jwtTokenService.GenerateJwtToken(user);
 
-            return _mapper.Map<LoginResult>(user);
-
-            //return new LoginResult
-            //{
-            //    Id = user.Id,
-            //    Email = user.Email,
-            //    Role = user.Role,
-            //    Token = token,
-            //};
+            var result = _mapper.Map<LoginResult>(user);
+            result.Token = token;  // add token to response
+            return result;
 
         }
     }
