@@ -2,11 +2,11 @@
 
 namespace final_crud.Middleware
 {
-    public class AppException: Exception
+    public class AppException : Exception
     {
-        public HttpStatusCode StatusCode { get; }
+        public int StatusCode { get; }
 
-        public AppException(string message, HttpStatusCode statusCode = HttpStatusCode.BadRequest)
+        public AppException(string message, int statusCode = 400)
             : base(message)
         {
             StatusCode = statusCode;

@@ -1,7 +1,7 @@
-﻿using AutoMapper;
+﻿using final_crud.Middleware;
+using AutoMapper;
 using BCrypt.Net;
 using final_crud.DTOs.User;
-using final_crud.Middleware;
 using final_crud.Models;
 using final_crud.Repositories.Interfaces;
 using final_crud.Services.GenerateToken;
@@ -27,7 +27,7 @@ namespace final_crud.Services
             var checkEmail = await _repository.GetUserAsync(dto.Email);
 
             if (checkEmail != null)
-                throw new Exception("Email already exists");
+                throw new AppException("Email already exists", 400);
 
             var hashPassword = BCrypt.Net.BCrypt.HashPassword(dto.PasswordHash);
 
@@ -103,7 +103,7 @@ namespace final_crud.Services
             var user = await _repository.GetUserAsync(dto.Email);
 
             if (user == null)
-                throw new AppException("User not found", HttpStatusCode.NotFound);
+                throw new Exception("User not found");
 
 
 
@@ -111,7 +111,7 @@ namespace final_crud.Services
 
 
             if (!isPasswordValid)
-                throw new AppException("Invalid password", HttpStatusCode.Unauthorized);
+                throw new Exception("Invalid password");
 
             //Console.WriteLine(user.Email);
             //Console.WriteLine(user.Role);

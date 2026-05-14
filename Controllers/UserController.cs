@@ -25,9 +25,8 @@ namespace final_crud.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody]RegisterUserDto dto)
         {
-                var result =
-                    await _service.RegisterAsync(dto);
-                return Ok(result);
+            var result = await _service.RegisterAsync(dto);
+            return Ok(result);
         }
 
         [HttpPut("{id}")]
@@ -88,7 +87,6 @@ namespace final_crud.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpGet("profile")]
         public IActionResult Profile()
         {

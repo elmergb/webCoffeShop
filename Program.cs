@@ -1,5 +1,4 @@
 using final_crud.Data;
-using final_crud.Middleware;
 using final_crud.Repositories;
 using final_crud.Repositories;
 using final_crud.Repositories.Interfaces;
